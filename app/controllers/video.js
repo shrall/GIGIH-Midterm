@@ -6,7 +6,8 @@ const VideoController = {
   //NOTE - Videos
   getAllVideos: async (req, res) => {
     try {
-      const videos = await VideoService.getAllVideos();
+      const page = parseInt(req.query.page || 1, 10);
+      const videos = await VideoService.getAllVideos(page);
       res.json(videos);
     } catch (error) {
       console.log(error);

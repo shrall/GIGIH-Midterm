@@ -16,6 +16,11 @@ const videoSchema = new mongoose.Schema(
   {
     youtube_url: String,
     thumbnail_url: String,
+    title: String,
+    views: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

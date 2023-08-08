@@ -1,16 +1,30 @@
 import VideoRepository from "../repositories/video.js";
 
 const VideoService = {
-  getAllVideos: async () => {
+  getAllVideos: async (page) => {
+    const videosPerPage = 12;
+    const skip = (page - 1) * videosPerPage;
+
     const videos = await VideoRepository.getAllVideos();
-    const returnVideos = videos.map((video) => {
+    const totalVideos = videos.length;
+
+    const paginatedVideos = videos.slice(skip, skip + videosPerPage);
+
+    const returnVideos = paginatedVideos.map((video) => {
       return {
         id: video._id,
         youtube_url: video.youtube_url,
         thumbnail_url: video.thumbnail_url,
+        title: video.title,
+        views: video.views,
       };
     });
-    return returnVideos;
+
+    return {
+      data: returnVideos,
+      currentPage: page,
+      totalPages: Math.ceil(totalVideos / videosPerPage),
+    };
   },
   getVideo: async (id) => {
     const data = await VideoRepository.getVideo(id);
@@ -18,6 +32,8 @@ const VideoService = {
       id: data.video._id,
       youtube_url: data.video.youtube_url,
       thumbnail_url: data.video.thumbnail_url,
+      title: data.video.title,
+      views: data.video.views,
       comments: data.comments,
       products: data.products,
     };
