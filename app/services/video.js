@@ -1,15 +1,20 @@
 import VideoRepository from "../repositories/video.js";
 
 const VideoService = {
-  getAllVideos: async (page) => {
+  getAllVideos: async (page, searchQuery) => {
     const videosPerPage = 12;
     const skip = (page - 1) * videosPerPage;
 
-    const videos = await VideoRepository.getAllVideos();
+    let videos = await VideoRepository.getAllVideos();
+
+    if (searchQuery) {
+      videos = videos.filter((video) =>
+        video.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
     const totalVideos = videos.length;
-
     const paginatedVideos = videos.slice(skip, skip + videosPerPage);
-
     const returnVideos = paginatedVideos.map((video) => {
       return {
         id: video._id,
@@ -19,7 +24,6 @@ const VideoService = {
         views: video.views,
       };
     });
-
     return {
       data: returnVideos,
       currentPage: page,

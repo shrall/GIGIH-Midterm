@@ -7,7 +7,8 @@ const VideoController = {
   getAllVideos: async (req, res) => {
     try {
       const page = parseInt(req.query.page || 1, 10);
-      const videos = await VideoService.getAllVideos(page);
+      const searchQuery = req.query.search || "";
+      const videos = await VideoService.getAllVideos(page, searchQuery);
       res.json(videos);
     } catch (error) {
       console.log(error);
