@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
+import cors from "cors";
 import express from "express";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 //NOTE - Routes
@@ -10,9 +12,9 @@ import videoRoutes from "./app/router/video.js";
 import commentRoutes from "./app/router/comment.js";
 import productRoutes from "./app/router/product.js";
 
-app.use("/video", videoRoutes);
-app.use("/comment", commentRoutes);
-app.use("/product", productRoutes);
+app.use("/api/video", videoRoutes);
+app.use("/api/comment", commentRoutes);
+app.use("/api/product", productRoutes);
 
 app.use((req, res) => {
   res.status(404).send("Not Found/Invalid route");
