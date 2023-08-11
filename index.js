@@ -11,7 +11,9 @@ app.use(express.json());
 import videoRoutes from "./app/router/video.js";
 import commentRoutes from "./app/router/comment.js";
 import productRoutes from "./app/router/product.js";
-
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
 app.use("/api/video", videoRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/product", productRoutes);
