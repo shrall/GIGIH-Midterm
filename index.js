@@ -6,7 +6,7 @@ import express from "express";
 const app = express();
 // Configure CORS with specific options
 const corsOptions = {
-  origin: "https://gigih-final-lilac.vercel.app", // Allow only this origin
+  origin: ["https://gigih-final-lilac.vercel.app", "http://localhost:5173"], // Allow only this origin
   methods: "*", // Allow all methods
 };
 
