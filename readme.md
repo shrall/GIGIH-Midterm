@@ -7,11 +7,13 @@ This README provides an overview of the Tokopedia Play API, including the databa
 The API uses MongoDB as the database to store information about videos, products, and comments related to the smart home device. The database consists of three collections:
 
 1. `videos` Collection:
+
    - `youtube_url`: String (URL of the video)
    - `thumbnail_url`: String (URL of the video thumbnail)
    - `createdAt`: Date (automatically generated timestamp)
 
 2. `products` Collection:
+
    - `url`: String (URL of the product)
    - `image_url`: String (URL of the product image)
    - `title`: String (title of the product)
@@ -29,7 +31,12 @@ The API uses MongoDB as the database to store information about videos, products
 
 The API is structured with the following endpoints:
 
-1. `GET /video/`: Get all videos available.
+1. `GET /video/`: Get all videos available, with optional query parameters.
+
+   - Query Parameters:
+     - `page`: Number (optional, default: 1) - The page number of results.
+     - `search`: String (optional) - Search term for filtering videos.
+
 2. `GET /video/:id`: Get a specific video by its ID.
 3. `POST /video/`: Create a new video.
 4. `GET /video/:id/comment`: Get all comments for a specific video.
@@ -42,30 +49,33 @@ The API is structured with the following endpoints:
 1. GET /video/
 
    - Request:
+
      ```http
      GET /video/
      ```
 
    - Response:
      ```json
-     [
-       {
-         "id": "video_id_1",
-         "youtube_url": "https://www.youtube.com/watch?v=abc123",
-         "thumbnail_url": "https://example.com/thumbnails/video1.jpg"
-       },
-       {
-         "id": "video_id_2",
-         "youtube_url": "https://www.youtube.com/watch?v=def456",
-         "thumbnail_url": "https://example.com/thumbnails/video2.jpg"
-       }
-       // More videos...
-     ]
+     {
+       "data": [
+         {
+           "id": "64d0e5cf620c8941bc8ff01b",
+           "youtube_url": "https://www.youtube.com/watch?v=72zg7F3p3BQ",
+           "thumbnail_url": "https://i.ytimg.com/vi/72zg7F3p3BQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCKLZdGDsZfxRyuqudsUbxx9DwLdg",
+           "title": "Nintendo Relaxing Music~",
+           "views": 30
+         }
+         // More videos
+       ],
+       "currentPage": 1,
+       "totalPages": 1
+     }
      ```
 
 2. GET /video/:id
 
    - Request:
+
      ```http
      GET /video/video_id_1
      ```
@@ -84,6 +94,7 @@ The API is structured with the following endpoints:
 3. POST /video/
 
    - Request:
+
      ```http
      POST /video/
      Content-Type: application/json
@@ -106,6 +117,7 @@ The API is structured with the following endpoints:
 4. GET /video/:id/comment
 
    - Request:
+
      ```http
      GET /video/video_id_1/comment
      ```
@@ -117,13 +129,15 @@ The API is structured with the following endpoints:
          "id": "comment_id_1",
          "username": "user1",
          "comment": "Great video!",
-         "video_id": "video_id_1"
+         "video_id": "video_id_1",
+         "createdAt": "2023-08-11T11:11:33.697Z"
        },
        {
          "id": "comment_id_2",
          "username": "user2",
          "comment": "Nice content!",
-         "video_id": "video_id_1"
+         "video_id": "video_id_1",
+         "createdAt": "2023-08-11T11:11:33.697Z"
        }
        // More comments...
      ]
@@ -132,6 +146,7 @@ The API is structured with the following endpoints:
 5. POST /comment/
 
    - Request:
+
      ```http
      POST /comment/
      Content-Type: application/json
@@ -156,6 +171,7 @@ The API is structured with the following endpoints:
 6. GET /video/:id/product
 
    - Request:
+
      ```http
      GET /video/video_id_1/product
      ```
@@ -186,6 +202,7 @@ The API is structured with the following endpoints:
 7. POST /product/
 
    - Request:
+
      ```http
      POST /product/
      Content-Type: application/json
