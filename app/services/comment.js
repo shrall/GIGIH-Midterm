@@ -9,6 +9,7 @@ const CommentService = {
         username: comment.username,
         comment: comment.comment,
         video_id: comment.video_id,
+        createdAt: comment.createdAt
       };
     });
     return returnComments;
