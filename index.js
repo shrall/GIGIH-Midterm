@@ -4,7 +4,13 @@ import cors from "cors";
 import express from "express";
 
 const app = express();
-app.use(cors());
+// Configure CORS with specific options
+const corsOptions = {
+  origin: "https://gigih-final-lilac.vercel.app", // Allow only this origin
+  methods: "*", // Allow all methods
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 //NOTE - Routes
